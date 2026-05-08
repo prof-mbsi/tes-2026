@@ -29,6 +29,22 @@ app.MapGet("/produtos/{nome}", (string nome) =>
     return Results.NotFound("Produto não encontrado");
 });
 
+app.MapGet("/produtos/mais-caro", () =>
+{
+    double maiorPreco = -1;
+    Produto maisCaro = new Produto();
+    foreach (var p in produtos)
+    {
+        if (p.Preco > maiorPreco)
+        {
+            maiorPreco = p.Preco;
+            maisCaro = p;
+        }
+    }
+    return Results.Ok(maisCaro);
+}
+);
+
 app.Run();
 
 class Produto
